@@ -1,793 +1,552 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>THEMOLUMAJOY LUX — Shine Daily. Stay Elegant.</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --royal:#1a3d8f;
-  --royal-deep:#112670;
-  --royal-mid:#2345a0;
-  --gold:#c9a84c;
-  --gold-light:#e8d5a3;
-  --gold-pale:#f7f2e8;
-  --white:#ffffff;
-  --off-white:#f9f8f6;
-  --panel:#f2f4f9;
-  --border:rgba(26,61,143,.13);
-  --border-gold:rgba(201,168,76,.3);
-  --text:#0d1a3a;
-  --muted:#5a6580;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--white);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8"/>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+<title>THEMOLUMAJOY LUX — Shine Daily. Stay Elegant.</title>  
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>  
+<style>  
+  :root {  
+    --royal: #1a3d8f;  
+    --royal-deep: #0e2560;  
+    --royal-mid: #2a52b8;  
+    --gold: #C9A84C;  
+    --gold-light: #E8D5A3;  
+    --gold-pale: #F7EFD8;  
+    --black: #060c1a;  
+    --charcoal: #0c1628;  
+    --dark: #091022;  
+    --white: #F5F8FF;  
+    --muted: #7a8aaa;  
+    --border: rgba(201,168,76,0.22);  
+    --border-blue: rgba(42,82,184,0.25);  
+  }  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+<h2>Add Product</h2>
 
-/* ── CURSOR ── */
-.cursor{position:fixed;width:10px;height:10px;background:var(--royal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s ease}
-.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--royal);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .18s ease;opacity:.5}
+<div class="admin">
+  <input type="text" id="name" placeholder="Product Name">
+  
+  <select id="category">
+    <option value="bestSellers">Best Sellers</option>
+    <option value="necklaces">Necklaces</option>
+    <option value="bracelets">Bracelets</option>
+  </select>
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--off-white)}
-::-webkit-scrollbar-thumb{background:var(--royal)}
+  <input type="text" id="image" placeholder="Image URL or img/name.jpg">
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px 60px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);animation:fadeDown 1s ease forwards}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:.12em;color:var(--royal);text-decoration:none}
-.logo span{font-style:italic;color:var(--gold)}
-.nav-links{display:flex;gap:40px;list-style:none}
-.nav-links a{color:var(--text);text-decoration:none;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.7;transition:opacity .3s,color .3s}
-.nav-links a:hover{opacity:1;color:var(--royal)}
-.nav-icons{display:flex;gap:20px;align-items:center}
-.nav-icons button{background:none;border:none;color:var(--text);font-size:1.1rem;cursor:none;opacity:.7;transition:opacity .3s,color .3s;position:relative}
-.nav-icons button:hover{opacity:1;color:var(--royal)}
-.cart-count{position:absolute;top:-6px;right:-8px;background:var(--royal);color:var(--white);font-size:.55rem;font-weight:600;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:none;padding:5px;background:none;border:none}
-.hamburger span{display:block;width:22px;height:1.5px;background:var(--royal);transition:all .3s}
-.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--royal);z-index:99;padding:20px 5%}
-.mobile-menu.open{display:block}
-.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:16px}
-.mobile-menu a{text-decoration:none;color:var(--text);font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;padding:8px 0;border-bottom:1px solid var(--border);display:block}
-
-/* ── HERO ── */
-.hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(26,61,143,.07) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(201,168,76,.05) 0%,transparent 50%),linear-gradient(135deg,#ffffff 0%,#f0f3fa 50%,#ffffff 100%)}
-.hero-grain{position:absolute;inset:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
-.hero-line{position:absolute;top:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--royal),transparent);opacity:.08}
-.hero-content{position:relative;text-align:center;animation:heroReveal 1.4s ease .3s both}
-@keyframes heroReveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-.hero-eyebrow{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--royal);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:16px}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--royal);opacity:.35}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1.05;letter-spacing:.02em;color:var(--royal-deep);margin-bottom:8px}
-.hero h1 em{font-style:italic;color:var(--gold);display:block}
-.hero-sub{font-size:.68rem;letter-spacing:.25em;color:var(--muted);margin:32px 0 48px;text-transform:uppercase}
-.hero-location{font-size:.62rem;letter-spacing:.2em;color:var(--royal);opacity:.6;margin-bottom:40px}
-.btn-primary{display:inline-block;padding:16px 48px;border:1px solid var(--royal);color:var(--royal);text-decoration:none;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;transition:all .4s ease;position:relative;overflow:hidden;cursor:none}
-.btn-primary::before{content:'';position:absolute;inset:0;background:var(--royal);transform:translateX(-101%);transition:transform .4s ease;z-index:-1}
-.btn-primary:hover{color:var(--white)}
-.btn-primary:hover::before{transform:translateX(0)}
-.btn-gold{border-color:var(--gold);color:var(--gold)}
-.btn-gold::before{background:var(--gold)}
-.btn-gold:hover{color:var(--white)}
-.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s ease infinite}
-.hero-scroll span{font-size:.52rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
-.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--royal),transparent)}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-.hero-badges{display:flex;gap:48px;justify-content:center;margin-top:52px;flex-wrap:wrap}
-.hero-badge{display:flex;align-items:center;gap:10px;color:var(--muted)}
-.hero-badge-icon{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.95rem;background:var(--off-white)}
-.hero-badge-text{font-size:.72rem;line-height:1.5}
-.hero-badge-text strong{display:block;color:var(--royal-deep);font-weight:600;font-size:.78rem}
-
-/* ── MARQUEE ── */
-.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 0;overflow:hidden;background:var(--panel)}
-.marquee-track{display:flex;gap:60px;width:max-content;animation:marquee 22s linear infinite}
-.marquee-item{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--royal);opacity:.7;white-space:nowrap;letter-spacing:.05em}
-.marquee-dot{color:var(--gold);opacity:.6}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ── SECTIONS ── */
-section{padding:100px 60px}
-.section-label{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--royal);margin-bottom:16px;display:flex;align-items:center;gap:16px}
-.section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--gold);opacity:.6}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.2;margin-bottom:48px;color:var(--royal-deep)}
-.section-title em{font-style:italic;color:var(--gold)}
-
-/* ── CATEGORIES ── */
-.categories{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
-.category-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:none;background:var(--white)}
-.category-bg{position:absolute;inset:0;transition:transform .6s ease}
-.category-card:hover .category-bg{transform:scale(1.08)}
-.cat-1 .category-bg{background:radial-gradient(ellipse at center,#d4e0ff 0%,#eef2ff 100%)}
-.cat-2 .category-bg{background:radial-gradient(ellipse at center,#f7efdb 0%,#faf6ed 100%)}
-.cat-3 .category-bg{background:radial-gradient(ellipse at center,#d4e0ff 0%,#e8eeff 100%)}
-.cat-4 .category-bg{background:radial-gradient(ellipse at center,#e8f0d4 0%,#f4f8ec 100%)}
-.cat-5 .category-bg{background:radial-gradient(ellipse at center,#f7efdb 0%,#fff8ee 100%)}
-.category-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:3.5rem;opacity:.3;transition:opacity .4s,transform .4s}
-.category-card:hover .category-icon{opacity:.5;transform:translate(-50%,-65%)}
-.category-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,38,112,.88) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 24px}
-.category-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--white);margin-bottom:6px;transition:color .3s}
-.category-card:hover .category-name{color:var(--gold-light)}
-.category-tag{font-size:.52rem;letter-spacing:.2em;color:var(--gold-light);text-transform:uppercase;opacity:.85}
-.category-btn{display:inline-block;margin-top:14px;font-size:.52rem;letter-spacing:.2em;color:var(--white);text-transform:uppercase;padding:8px 0;border-bottom:1px solid var(--gold);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;cursor:none;text-decoration:none}
-.category-card:hover .category-btn{opacity:1;transform:translateY(0)}
-
-/* ── PRODUCTS ── */
-.products{background:var(--white)}
-.products-filter{display:flex;gap:8px;margin-bottom:48px;flex-wrap:wrap}
-.filter-btn{padding:8px 24px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .3s}
-.filter-btn.active,.filter-btn:hover{border-color:var(--royal);color:var(--royal);background:rgba(26,61,143,.05)}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
-.product-card{background:var(--panel);cursor:none;position:relative;overflow:hidden;transition:transform .4s ease}
-.product-image{position:relative;aspect-ratio:1/1.15;overflow:hidden;background:var(--white);display:flex;align-items:center;justify-content:center}
-.product-emoji{font-size:5rem;opacity:.25;transition:transform .6s ease,opacity .4s}
-.product-card:hover .product-emoji{transform:scale(1.15);opacity:.4}
-.product-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s}
-.product-card:hover .product-glow{opacity:1}
-.glow-royal{background:radial-gradient(ellipse at center,rgba(26,61,143,.07) 0%,transparent 70%)}
-.glow-gold{background:radial-gradient(ellipse at center,rgba(201,168,76,.09) 0%,transparent 70%)}
-.product-badge{position:absolute;top:16px;left:16px;background:var(--royal);color:var(--white);font-size:.52rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px}
-.product-badge.gold-badge{background:var(--gold);color:var(--royal-deep)}
-.product-actions{position:absolute;top:16px;right:16px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateX(12px);transition:all .3s ease}
-.product-card:hover .product-actions{opacity:1;transform:translateX(0)}
-.action-btn{width:36px;height:36px;background:rgba(255,255,255,.95);border:1px solid var(--border);color:var(--text);cursor:none;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .3s}
-.action-btn:hover{background:var(--royal);border-color:var(--royal);color:var(--white)}
-.product-info{padding:20px 20px 24px;border-top:1px solid var(--border)}
-.product-category{font-size:.52rem;letter-spacing:.2em;color:var(--royal);text-transform:uppercase;margin-bottom:8px}
-.product-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:var(--royal-deep);margin-bottom:8px;line-height:1.3}
-.engrave-tag{display:inline-flex;align-items:center;gap:5px;color:var(--gold);font-size:.6rem;font-weight:500;letter-spacing:.05em;margin-bottom:12px}
-.product-footer{display:flex;align-items:center;justify-content:space-between}
-.product-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--royal);font-weight:400}
-.add-to-cart{padding:10px 18px;background:none;border:1px solid var(--royal);color:var(--royal);font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .3s}
-.add-to-cart:hover{background:var(--royal);color:var(--white)}
-
-/* ── ENGRAVE CTA ── */
-.engrave-cta{background:linear-gradient(135deg,var(--royal-deep) 0%,var(--royal) 50%,var(--royal-mid) 100%);border-top:1px solid var(--border-gold);border-bottom:1px solid var(--border-gold);text-align:center;position:relative;overflow:hidden}
-.engrave-cta::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(201,168,76,.04) 0,rgba(201,168,76,.04) 1px,transparent 0,transparent 40px)}
-.engrave-cta::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.1) 0%,transparent 65%)}
-.engrave-cta .cta-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
-.engrave-cta .big-number{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,10rem);color:var(--gold);opacity:.07;position:absolute;top:-30px;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap}
-.engrave-cta .section-label{color:var(--gold-light);justify-content:center}
-.engrave-cta .section-label::after{background:var(--gold-light);opacity:.5}
-.engrave-cta .section-title{color:var(--white)}
-.engrave-cta .section-title em{color:var(--gold-light)}
-.engrave-cta p{color:rgba(255,255,255,.7);font-size:.8rem;line-height:1.8;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
-.engrave-steps-row{display:flex;justify-content:center;gap:40px;margin-bottom:44px;flex-wrap:wrap}
-.engrave-step-item{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:160px}
-.engrave-step-num{width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center}
-.engrave-step-text{color:rgba(255,255,255,.7);font-size:.72rem;text-align:center;line-height:1.6;letter-spacing:.04em}
-.engrave-step-text strong{color:var(--white);display:block;margin-bottom:3px;font-size:.78rem}
-.engrave-live-box{max-width:480px;margin:0 auto 36px;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.25);padding:28px}
-.engrave-live-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-light);opacity:.7;margin-bottom:12px}
-.engrave-live-preview{font-family:'Cormorant Garamond',serif;font-size:2rem;font-style:italic;color:var(--gold-light);letter-spacing:.08em;min-height:48px;word-break:break-all;margin-bottom:16px}
-.engrave-live-input{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:12px 16px;color:var(--white);font-size:.9rem;font-family:'Jost',sans-serif;outline:none;transition:border-color .2s}
-.engrave-live-input::placeholder{color:rgba(255,255,255,.35)}
-.engrave-live-input:focus{border-color:var(--gold)}
-.engrave-live-counter{text-align:right;color:rgba(255,255,255,.4);font-size:.68rem;margin-top:6px}
-.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-wa{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:#25D366;border:none;color:var(--white);font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;text-decoration:none;font-weight:500;transition:background .3s}
-.btn-wa:hover{background:#128C7E}
-.btn-wa svg{width:16px;height:16px}
-.btn-white{display:inline-block;padding:16px 36px;background:transparent;border:1px solid rgba(255,255,255,.4);color:var(--white);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;text-decoration:none;transition:all .3s}
-.btn-white:hover{background:rgba(255,255,255,.1);border-color:var(--white)}
-
-/* ── TESTIMONIALS ── */
-.testimonials{background:var(--panel);text-align:center}
-.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
-.testimonial{padding:40px 32px;background:var(--white);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
-.testimonial:hover{border-color:var(--royal);box-shadow:0 12px 40px rgba(26,61,143,.08)}
-.testimonial-stars{color:var(--gold);font-size:.8rem;margin-bottom:20px;letter-spacing:4px}
-.testimonial-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--royal-deep);line-height:1.8;margin-bottom:24px}
-.testimonial-name{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-
-/* ── ABOUT ── */
-.about-strip{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-visual{position:relative}
-.about-main-img{background:var(--panel);border:1px solid var(--border);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:5rem}
-.about-stat-card{position:absolute;background:var(--white);border:1px solid var(--border);padding:18px 22px;box-shadow:0 8px 30px rgba(26,61,143,.1)}
-.about-stat-card.top-right{top:-20px;right:-20px}
-.about-stat-card.bottom-left{bottom:-20px;left:-20px}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--royal);font-weight:600;line-height:1}
-.stat-label{color:var(--muted);font-size:.7rem;margin-top:4px}
-.about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
-.about-feat{background:var(--panel);padding:16px;border-left:3px solid var(--gold)}
-.about-feat-title{font-weight:600;font-size:.82rem;color:var(--royal-deep);margin-bottom:5px}
-.about-feat-text{color:var(--muted);font-size:.75rem;line-height:1.6}
-
-/* ── FAQ ── */
-.faq{background:var(--off-white)}
-.faq-inner{max-width:780px;margin:0 auto}
-.faq-list{display:flex;flex-direction:column;gap:2px}
-.faq-item{overflow:hidden;border:1px solid var(--border);background:var(--white)}
-.faq-question{width:100%;background:none;border:none;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:none;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:500;color:var(--royal-deep);text-align:left;transition:background .2s}
-.faq-question:hover{background:var(--panel)}
-.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;color:var(--royal);transition:transform .3s,background .2s}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--royal);color:var(--white);border-color:var(--royal)}
-.faq-answer{display:none;padding:0 24px 20px;color:var(--muted);font-size:.82rem;line-height:1.8}
-.faq-item.open .faq-answer{display:block}
-
-/* ── CONTACT ── */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.contact-card{background:var(--panel);border:1px solid var(--border);padding:22px;display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
-.contact-icon{width:44px;height:44px;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
-.contact-card-title{font-weight:600;font-size:.85rem;color:var(--royal-deep);margin-bottom:5px}
-.contact-card-text{color:var(--muted);font-size:.8rem;line-height:1.6}
-.contact-card-link{color:var(--royal);font-weight:600;font-size:.82rem;text-decoration:none;display:block;margin-top:5px}
-.contact-card-link:hover{color:var(--gold)}
-.contact-form-wrap{background:var(--panel);border:1px solid var(--border);padding:36px}
-.contact-form-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--royal-deep);font-weight:600;margin-bottom:24px}
-.form-group{margin-bottom:14px}
-.form-label{display:block;font-size:.62rem;font-weight:600;letter-spacing:.12em;color:var(--royal-deep);margin-bottom:8px;text-transform:uppercase}
-.form-input{width:100%;border:1px solid var(--border);padding:12px 14px;font-family:'Jost',sans-serif;font-size:.88rem;color:var(--text);transition:border-color .2s;outline:none;background:var(--white)}
-.form-input:focus{border-color:var(--royal)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-/* ── CART ── */
-.cart-overlay{position:fixed;inset:0;background:rgba(17,38,112,.3);z-index:200;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(4px)}
-.cart-overlay.open{opacity:1;pointer-events:all}
-.cart-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:95vw;background:var(--white);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column}
-.cart-overlay.open .cart-panel{transform:translateX(0)}
-.cart-header{padding:32px 32px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.cart-header h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--royal-deep)}
-.cart-close{background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:none;transition:color .3s}
-.cart-close:hover{color:var(--text)}
-.cart-items-wrap{flex:1;overflow-y:auto;padding:24px 32px}
-.cart-empty{text-align:center;padding:60px 0;color:var(--muted)}
-.cart-empty .empty-icon{font-size:3rem;margin-bottom:16px;opacity:.3}
-.cart-empty p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic}
-.cart-item{display:flex;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--border)}
-.cart-item-icon{font-size:2rem;width:56px;text-align:center;opacity:.7}
-.cart-item-details{flex:1}
-.cart-item-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--royal-deep);margin-bottom:4px}
-.cart-item-price{font-size:.7rem;color:var(--royal)}
-.cart-item-engrave{font-size:.65rem;color:var(--gold);margin-top:2px}
-.cart-item-remove{background:none;border:none;color:var(--muted);cursor:none;font-size:1rem;transition:color .3s}
-.cart-item-remove:hover{color:var(--text)}
-.cart-footer{padding:24px 32px 32px;border-top:1px solid var(--border)}
-.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.cart-total span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.cart-total strong{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--royal)}
-.checkout-btn{width:100%;padding:18px;background:var(--royal);border:none;color:var(--white);cursor:none;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500;transition:background .3s;margin-bottom:8px}
-.checkout-btn:hover{background:var(--royal-deep)}
-.wa-checkout{width:100%;padding:14px;background:#25D366;border:none;color:var(--white);cursor:none;font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:background .3s;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
-.wa-checkout:hover{background:#128C7E}
-
-/* ── ORDER MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(17,38,112,.35);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
-.modal-overlay.open{display:flex}
-.modal{background:var(--white);border:1px solid var(--border);max-width:500px;width:100%;max-height:90vh;overflow-y:auto;animation:modalIn .3s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-.modal-header{padding:28px 28px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
-.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--royal-deep);font-weight:600}
-.modal-close{background:none;border:none;font-size:1.4rem;cursor:none;color:var(--muted);transition:color .2s}
-.modal-close:hover{color:var(--text)}
-.modal-body{padding:28px}
-.modal-product-info{display:flex;align-items:center;gap:16px;background:var(--panel);padding:16px;margin-bottom:24px;border:1px solid var(--border)}
-.modal-product-emoji{font-size:2rem}
-.modal-product-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--royal-deep);font-weight:600}
-.modal-product-price{color:var(--royal);font-weight:500;font-size:.85rem}
-.char-count{font-size:.68rem;color:var(--muted);text-align:right;margin-top:4px}
-.char-count.warn{color:#c0392b}
-.engrave-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.engrave-opt{border:1px solid var(--border);padding:14px;cursor:none;transition:all .2s;text-align:center}
-.engrave-opt:hover,.engrave-opt.active{border-color:var(--royal);background:var(--panel)}
-.engrave-opt-title{font-weight:600;font-size:.82rem;color:var(--royal-deep);margin-bottom:4px}
-.engrave-opt-sub{font-size:.7rem;color:var(--muted)}
-.engrave-notice{background:rgba(201,168,76,.08);border:1px solid var(--border-gold);padding:14px;margin-bottom:20px;font-size:.78rem;color:var(--royal-deep);line-height:1.7}
-.engrave-notice strong{color:var(--gold);display:block;margin-bottom:4px}
-.wa-order-btn{width:100%;background:#25D366;color:var(--white);border:none;padding:16px;font-size:.82rem;font-weight:600;letter-spacing:.08em;cursor:none;display:flex;align-items:center;justify-content:center;gap:10px;text-transform:uppercase;text-decoration:none;transition:background .2s;font-family:'Jost',sans-serif}
-.wa-order-btn:hover{background:#128C7E}
-
-/* ── FOOTER ── */
-footer{background:var(--royal-deep);padding:60px 60px 40px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px}
-.footer-brand .logo{display:block;margin-bottom:12px;font-size:1.4rem;color:var(--gold-light)}
-.footer-brand .logo span{color:var(--white)}
-.footer-tagline{font-size:.62rem;letter-spacing:.2em;color:var(--gold-light);text-transform:uppercase;margin-bottom:14px}
-.footer-brand p{font-size:.75rem;color:rgba(255,255,255,.5);line-height:1.8}
-.footer-col h4{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px}
-.footer-col ul{list-style:none}
-.footer-col li{margin-bottom:12px}
-.footer-col a{text-decoration:none;color:rgba(255,255,255,.5);font-size:.75rem;transition:color .3s}
-.footer-col a:hover{color:var(--gold-light)}
-.footer-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-bottom p{font-size:.62rem;color:rgba(255,255,255,.35)}
-.footer-bottom p span{color:var(--gold-light)}
-.footer-socials{display:flex;gap:12px}
-.social-link{width:36px;height:36px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.95rem;color:rgba(255,255,255,.6);transition:all .3s}
-.social-link:hover{background:var(--gold);border-color:var(--gold);color:var(--royal-deep)}
-
-/* ── WA FLOAT ── */
-.wa-float{position:fixed;bottom:28px;right:28px;z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.wa-bubble{background:var(--white);border:1px solid var(--border);padding:12px 16px;max-width:210px;box-shadow:0 8px 30px rgba(26,61,143,.12);font-size:.78rem;color:var(--text);line-height:1.5;animation:fadeUp .5s ease .5s both}
-.wa-bubble strong{display:block;color:var(--royal-deep);margin-bottom:2px;font-size:.82rem}
-.wa-btn-float{width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.35);text-decoration:none;transition:transform .2s}
-.wa-btn-float:hover{transform:scale(1.1)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(30px);transition:all .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* ── TRUST STRIP ── */
-.trust-strip{background:var(--royal);padding:16px 60px;display:flex;justify-content:center;flex-wrap:wrap}
-.trust-item{display:flex;align-items:center;gap:10px;padding:4px 32px;color:var(--white);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border-right:1px solid rgba(255,255,255,.15)}
-.trust-item:last-child{border-right:none}
-.trust-item svg{width:16px;height:16px;opacity:.8;flex-shrink:0}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
-  nav{padding:20px 30px}
-  section{padding:70px 30px}
-  .trust-strip{padding:14px 30px}
-  .trust-item{padding:4px 18px;font-size:.62rem}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  footer{padding:50px 30px 30px}
-  .about-inner{grid-template-columns:1fr;gap:40px}
-  .category-grid{grid-template-columns:repeat(3,1fr)}
-  .contact-grid{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  nav{padding:18px 24px}
-  section{padding:60px 24px}
-  .category-grid{grid-template-columns:repeat(2,1fr)}
-  .testimonial-grid{grid-template-columns:1fr}
-  .about-stat-card.top-right{right:8px;top:-10px}
-  .about-stat-card.bottom-left{left:8px;bottom:-10px}
-  .footer-grid{grid-template-columns:1fr}
-  footer{padding:40px 24px 24px}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .trust-strip{padding:12px 20px}
-  .trust-item{padding:3px 12px;font-size:.58rem}
-  .form-row{grid-template-columns:1fr}
-  .engrave-steps-row{gap:24px}
-  .hero-badges{gap:24px}
-}
-</style>
-</head>
-<body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- ANNOUNCEMENT -->
-<div style="background:var(--gold);color:var(--royal-deep);text-align:center;padding:9px 20px;font-size:.68rem;letter-spacing:.15em;font-weight:600;text-transform:uppercase">
-  ✦ Free Delivery on Orders Above ₦30,000 &nbsp;·&nbsp; 24hrs Engraving Available &nbsp;·&nbsp; 3-Month Non-Tarnish Guarantee ✦
+  <button onclick="addProduct()">Add Product</button>
 </div>
-
-<!-- NAV -->
-<nav>
-  <a href="#home" class="logo">THEMOLUMA<span>JOY</span> LUX</a>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#shop">Shop</a></li>
-    <li><a href="#engrave">Engraving</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-icons">
-    <button onclick="toggleCart()" title="Cart">🛍️<span class="cart-count" id="cartCount">0</span></button>
-    <button class="hamburger" id="hamBtn" onclick="toggleMenu()" style="display:none"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <ul>
-    <li><a href="#home" onclick="toggleMenu()">Home</a></li>
-    <li><a href="#shop" onclick="toggleMenu()">Shop</a></li>
-    <li><a href="#engrave" onclick="toggleMenu()">Engraving</a></li>
-    <li><a href="#about" onclick="toggleMenu()">About Us</a></li>
-    <li><a href="#faq" onclick="toggleMenu()">FAQ</a></li>
-    <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-    <li><a href="https://wa.me/2349157562801" target="_blank">💬 Order via WhatsApp</a></li>
-  </ul>
-</div>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-grain"></div>
-  <div class="hero-line"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Ekpoma, Edo State · Nigeria</div>
-    <h1>Shine Daily.<br/><em>Stay Elegant.</em></h1>
-    <p class="hero-sub">Premium Luxury Accessories for the Modern Woman</p>
-    <p class="hero-location">✦ Serving Nigeria & International Customers ✦</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-      <a href="#shop" class="btn-primary">Explore Collection</a>
-      <a href="https://wa.me/2349157562801?text=Hi!%20I'd%20like%20to%20place%20an%20order." class="btn-primary btn-gold" target="_blank">Order via WhatsApp</a>
-    </div>
-    <div class="hero-badges">
-      <div class="hero-badge">
-        <div class="hero-badge-icon">💎</div>
-        <div class="hero-badge-text"><strong>5,000+ Customers</strong>Served worldwide</div>
-      </div>
-      <div class="hero-badge">
-        <div class="hero-badge-icon">⚡</div>
-        <div class="hero-badge-text"><strong>24hr Engraving</strong>Fast & precise</div>
-      </div>
-      <div class="hero-badge">
-        <div class="hero-badge-icon">🛡️</div>
-        <div class="hero-badge-text"><strong>3-Month Guarantee</strong>Non-tarnish promise</div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-</section>
-
-<!-- TRUST -->
-<div class="trust-strip">
-  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Non-Tarnish Guaranteed</div>
-  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>24hr Engraving</div>
-  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Nationwide & Int'l Delivery</div>
-  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>5,000+ Happy Customers</div>
-</div>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item">24hr Engraving</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Non-Tarnish Jewelry</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Moissanite Collection</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Luxury Wristwatches</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Dainty Necklaces</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Tote Bags</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Worldwide Delivery</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">3-Month Guarantee</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">24hr Engraving</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Non-Tarnish Jewelry</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Moissanite Collection</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Luxury Wristwatches</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Dainty Necklaces</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Tote Bags</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">Worldwide Delivery</span><span class="marquee-dot"> ✦ </span>
-    <span class="marquee-item">3-Month Guarantee</span><span class="marquee-dot"> ✦ </span>
-  </div>
-</div>
-
-<!-- CATEGORIES -->
-<section class="categories" id="categories">
-  <div class="section-label">Browse by Category</div>
-  <div class="section-title">Find Your <em>Signature</em> Piece</div>
-  <div class="category-grid">
-    <div class="category-card cat-1 reveal"><div class="category-bg"></div><div class="category-icon">💍</div><div class="category-overlay"><div class="category-name">Engraving Jewelry</div><div class="category-tag">Necklaces · Bracelets · Watches</div><a href="#shop" class="category-btn">Shop Now →</a></div></div>
-    <div class="category-card cat-2 reveal"><div class="category-bg"></div><div class="category-icon">📿</div><div class="category-overlay"><div class="category-name">Dainty Necklaces</div><div class="category-tag">Non-Tarnish · Everyday Elegance</div><a href="#shop" class="category-btn">Shop Now →</a></div></div>
-    <div class="category-card cat-3 reveal"><div class="category-bg"></div><div class="category-icon">💎</div><div class="category-overlay"><div class="category-name">Moissanite</div><div class="category-tag">Premium · Brilliant · Timeless</div><a href="#shop" class="category-btn">Shop Now →</a></div></div>
-    <div class="category-card cat-4 reveal"><div class="category-bg"></div><div class="category-icon">⌚</div><div class="category-overlay"><div class="category-name">Luxury Watches</div><div class="category-tag">Elegant · Engravable · Functional</div><a href="#shop" class="category-btn">Shop Now →</a></div></div>
-    <div class="category-card cat-5 reveal"><div class="category-bg"></div><div class="category-icon">👜</div><div class="category-overlay"><div class="category-name">Tote Bags</div><div class="category-tag">Chic · Spacious · Luxe</div><a href="#shop" class="category-btn">Shop Now →</a></div></div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="products" id="shop">
-  <div class="section-label">New Arrivals</div>
-  <div class="section-title">Our <em>Bestsellers</em></div>
-  <div class="products-filter">
-    <button class="filter-btn active" onclick="filterProducts(this,'all')">All Pieces</button>
-    <button class="filter-btn" onclick="filterProducts(this,'jewelry')">Jewelry</button>
-    <button class="filter-btn" onclick="filterProducts(this,'watches')">Watches</button>
-    <button class="filter-btn" onclick="filterProducts(this,'bags')">Bags</button>
-    <button class="filter-btn" onclick="filterProducts(this,'moissanite')">Moissanite</button>
-  </div>
-  <div class="products-grid">
-    <div class="product-card reveal" data-cat="jewelry">
-      <div class="product-image"><div class="product-glow glow-gold"></div><div class="product-emoji">📿</div><div class="product-badge gold-badge">Bestseller</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Dainty Necklaces</div><div class="product-name">Gold-Plated Layered Necklace</div><div class="engrave-tag">✍️ Engravable</div><div class="product-footer"><div class="product-price">₦12,500</div><button class="add-to-cart" onclick="openModal('Gold-Plated Layered Necklace','₦12,500','📿',true)">Order</button></div></div>
-    </div>
-    <div class="product-card reveal" data-cat="moissanite">
-      <div class="product-image"><div class="product-glow glow-royal"></div><div class="product-emoji">💎</div><div class="product-badge">Moissanite</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Moissanite Jewelry</div><div class="product-name">Moissanite Solitaire Bracelet</div><div class="engrave-tag">✍️ Engravable</div><div class="product-footer"><div class="product-price">₦45,000</div><button class="add-to-cart" onclick="openModal('Moissanite Solitaire Bracelet','₦45,000','💎',true)">Order</button></div></div>
-    </div>
-    <div class="product-card reveal" data-cat="watches">
-      <div class="product-image"><div class="product-glow glow-gold"></div><div class="product-emoji">⌚</div><div class="product-badge gold-badge">Hot Pick</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Luxury Wristwatches</div><div class="product-name">Luxury Engraved Wristwatch</div><div class="engrave-tag">✍️ Engravable</div><div class="product-footer"><div class="product-price">₦38,000</div><button class="add-to-cart" onclick="openModal('Luxury Engraved Wristwatch','₦38,000','⌚',true)">Order</button></div></div>
-    </div>
-    <div class="product-card reveal" data-cat="jewelry">
-      <div class="product-image"><div class="product-glow glow-royal"></div><div class="product-emoji">💍</div><div class="product-badge">24hr Engrave</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Engraving Jewelry</div><div class="product-name">Name Bar Necklace</div><div class="engrave-tag">✍️ Front + Back Engravable</div><div class="product-footer"><div class="product-price">₦18,500</div><button class="add-to-cart" onclick="openModal('Name Bar Necklace','₦18,500','💍',true)">Order</button></div></div>
-    </div>
-    <div class="product-card reveal" data-cat="bags">
-      <div class="product-image"><div class="product-glow glow-gold"></div><div class="product-emoji">👜</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Tote Bags</div><div class="product-name">Premium Lux Tote Bag</div><div style="height:20px"></div><div class="product-footer"><div class="product-price">₦22,000</div><button class="add-to-cart" onclick="openModal('Premium Lux Tote Bag','₦22,000','👜',false)">Order</button></div></div>
-    </div>
-    <div class="product-card reveal" data-cat="jewelry">
-      <div class="product-image"><div class="product-glow glow-royal"></div><div class="product-emoji">✨</div><div class="product-badge gold-badge">New In</div><div class="product-actions"><button class="action-btn">👁️</button><button class="action-btn">♡</button></div></div>
-      <div class="product-info"><div class="product-category">Dainty Necklaces</div><div class="product-name">Herringbone Chain Necklace</div><div class="engrave-tag">✍️ Engravable</div><div class="product-footer"><div class="product-price">₦16,000</div><button class="add-to-cart" onclick="openModal('Herringbone Chain Necklace','₦16,000','✨',true)">Order</button></div></div>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:52px">
-    <a href="https://wa.me/2349157562801?text=Hi!%20I'd%20like%20to%20see%20more%20products." class="btn-primary" target="_blank">View All Products on WhatsApp ✦</a>
-  </div>
-</section>
-
-<!-- ENGRAVING -->
-<section class="engrave-cta" id="engrave">
-  <div class="cta-inner">
-    <div class="big-number">24</div>
-    <div class="section-label">Personalization Service</div>
-    <div class="section-title">24-Hour <em>Engraving</em></div>
-    <p>Make it forever yours. Add a name, date, or special message to any eligible piece. Our precision engraving service is fast, personal, and built to last.</p>
-    <div class="engrave-steps-row">
-      <div class="engrave-step-item"><div class="engrave-step-num">1</div><div class="engrave-step-text"><strong>Choose Piece</strong>Necklaces, bracelets & watches</div></div>
-      <div class="engrave-step-item"><div class="engrave-step-num">2</div><div class="engrave-step-text"><strong>Send Your Text</strong>Up to 20 characters</div></div>
-      <div class="engrave-step-item"><div class="engrave-step-num">3</div><div class="engrave-step-text"><strong>Ready in 24hrs</strong>Back engraving +₦3,000</div></div>
-      <div class="engrave-step-item"><div class="engrave-step-num">4</div><div class="engrave-step-text"><strong>Delivered</strong>3–5 days to your door</div></div>
-    </div>
-    <div class="engrave-live-box">
-      <div class="engrave-live-label">✦ Live Preview</div>
-      <div class="engrave-live-preview" id="livePreview">Your Name Here</div>
-      <input type="text" class="engrave-live-input" placeholder="Type your engraving text…" maxlength="20" oninput="updateLivePreview(this)"/>
-      <div class="engrave-live-counter" id="liveCounter">0 / 20 characters</div>
-    </div>
-    <div class="cta-actions">
-      <a href="https://wa.me/2349157562801?text=Hi!%20I'd%20like%20to%20engrave%20a%20piece." class="btn-wa" target="_blank">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.526 5.847L.057 23.4c-.073.26.007.537.207.718.14.124.323.19.511.19.067 0 .135-.01.2-.029l5.75-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.969 0-3.821-.524-5.427-1.439l-.39-.23-4.05 1.058 1.02-3.944-.254-.403A9.955 9.955 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
-        Order Engraving via WhatsApp
-      </a>
-      <a href="#shop" class="btn-white">Browse Engravable Pieces</a>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about-strip" id="about">
-  <div class="about-inner">
-    <div class="about-visual reveal">
-      <div class="about-main-img">💎</div>
-      <div class="about-stat-card top-right"><div class="stat-num">5,000+</div><div class="stat-label">Customers Served</div></div>
-      <div class="about-stat-card bottom-left"><div class="stat-num">3-Mo.</div><div class="stat-label">Non-Tarnish Guarantee</div></div>
-    </div>
-    <div class="reveal">
-      <div class="section-label">Our Story</div>
-      <div class="section-title">Luxury That <em>Loves You</em> Back</div>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.85;margin-bottom:16px">We are THEMOLUMAJOY LUX — a luxury accessory brand born in Ekpoma, Edo State, Nigeria, with a singular mission: make high-quality, elegant pieces accessible to every young woman who deserves to shine.</p>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.85;margin-bottom:30px">From our non-tarnish jewelry to our Moissanite collections and custom engraving service, every piece is curated with love, quality, and your lifestyle in mind. We serve Nigeria and international customers with pride.</p>
-      <div class="about-features">
-        <div class="about-feat"><div class="about-feat-title">🌍 Nationwide Delivery</div><div class="about-feat-text">All 36 states in Nigeria & internationally. 3–5 days to your door.</div></div>
-        <div class="about-feat"><div class="about-feat-title">🛡️ Quality Promise</div><div class="about-feat-text">3-month non-tarnish guarantee. We stand behind every single piece.</div></div>
-        <div class="about-feat"><div class="about-feat-title">✍️ 24hr Engraving</div><div class="about-feat-text">Personalized in 24 hours. Max 20 characters. Front & back available.</div></div>
-        <div class="about-feat"><div class="about-feat-title">💬 Easy WhatsApp Orders</div><div class="about-feat-text">Chat us anytime. Fast, personal, and completely seamless.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="section-label" style="justify-content:center">Customer Love</div>
-  <div class="section-title">What Our <em>Customers</em> Say</div>
-  <div class="testimonial-grid">
-    <div class="testimonial reveal"><div class="testimonial-stars">★★★★★</div><div class="testimonial-text">"I ordered a name bar necklace with engraving and it was ready the very next day. The quality is stunning — I've gotten so many compliments. THEMOLUMAJOY LUX is the real deal!"</div><div class="testimonial-name">Chioma A. — Lagos</div></div>
-    <div class="testimonial reveal"><div class="testimonial-stars">★★★★★</div><div class="testimonial-text">"My Moissanite bracelet looks absolutely real and luxurious. Been wearing it for 4 months and it hasn't tarnished at all. The 3-month guarantee is real! Will definitely order again."</div><div class="testimonial-name">Amara O. — Abuja</div></div>
-    <div class="testimonial reveal"><div class="testimonial-stars">★★★★★</div><div class="testimonial-text">"Ordered the luxury wristwatch with back engraving as a birthday gift. It arrived beautifully packaged and my friend was in tears. The WhatsApp service was so smooth!"</div><div class="testimonial-name">Blessing E. — Port Harcourt</div></div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="faq-inner">
-    <div class="section-label">Got Questions?</div>
-    <div class="section-title">Frequently Asked <em>Questions</em></div>
-    <div class="faq-list">
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How does engraving work? <span class="faq-icon">+</span></button><div class="faq-answer">Choose your jewelry piece, then place your order via WhatsApp with your engraving text (up to 20 characters). Front engraving is standard. Back engraving: +₦3,000. Your piece is ready within 24 hours before shipping.</div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How long does delivery take? <span class="faq-icon">+</span></button><div class="faq-answer">Delivery takes 3–5 business days depending on your location within Nigeria. International delivery timelines may vary. We'll keep you updated at every step.</div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What is the non-tarnish guarantee? <span class="faq-icon">+</span></button><div class="faq-answer">All our jewelry comes with a 3-month non-tarnish guarantee. If your piece tarnishes within 3 months of purchase under normal use, contact us and we'll resolve it immediately.</div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How do I place an order? <span class="faq-icon">+</span></button><div class="faq-answer">Click any "Order" button to open the order form, or chat us directly at 09157562801 on WhatsApp. Tell us the item, engraving details, and your delivery address.</div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Do you ship internationally? <span class="faq-icon">+</span></button><div class="faq-answer">Yes! We serve Nigeria and international customers. International shipping rates and timelines are discussed when you place your order via WhatsApp.</div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Which items can be engraved? <span class="faq-icon">+</span></button><div class="faq-answer">Engraving is available on necklaces, bracelets, and wristwatches. Up to 20 characters. Back engraving: +₦3,000, available on select pieces.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section style="background:var(--white)" id="contact">
-  <div class="section-label">Get In Touch</div>
-  <div class="section-title">Let's Talk <em>Luxury</em></div>
-  <div class="contact-grid">
-    <div>
-      <div class="contact-card"><div class="contact-icon">💬</div><div><div class="contact-card-title">WhatsApp (Fastest)</div><div class="contact-card-text">Chat us directly for orders, questions, or style advice.</div><a href="https://wa.me/2349157562801" target="_blank" class="contact-card-link">+234 915 756 2801</a></div></div>
-      <div class="contact-card"><div class="contact-icon">📸</div><div><div class="contact-card-title">Instagram</div><div class="contact-card-text">New arrivals, styling ideas, and exclusive deals.</div><a href="https://instagram.com/Themolumajoy_Lux" target="_blank" class="contact-card-link">@Themolumajoy Lux</a></div></div>
-      <div class="contact-card"><div class="contact-icon">🎵</div><div><div class="contact-card-title">TikTok</div><div class="contact-card-text">Unboxings, styling tips & behind the scenes.</div><a href="https://tiktok.com/@Themolumajoy_Lux" target="_blank" class="contact-card-link">@Themolumajoy Lux</a></div></div>
-      <div class="contact-card"><div class="contact-icon">📍</div><div><div class="contact-card-title">Location</div><div class="contact-card-text">Ekpoma, Edo State, Nigeria.<br/>Serving Nigeria & International customers.</div></div></div>
-    </div>
-    <div class="contact-form-wrap">
-      <div class="contact-form-title">Send a Message</div>
-      <div class="form-row" style="margin-bottom:14px">
-        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Ada"/></div>
-        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Okonkwo"/></div>
-      </div>
-      <div class="form-group"><label class="form-label">WhatsApp Number</label><input type="tel" class="form-input" placeholder="+234 800 000 0000"/></div>
-      <div class="form-group"><label class="form-label">Subject</label><input type="text" class="form-input" placeholder="Order inquiry, engraving, etc."/></div>
-      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" style="resize:vertical;min-height:100px" placeholder="Tell us what you need…"></textarea></div>
-      <a href="https://wa.me/2349157562801" target="_blank" class="wa-order-btn" style="margin-top:4px">
-        <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.526 5.847L.057 23.4c-.073.26.007.537.207.718.14.124.323.19.511.19.067 0 .135-.01.2-.029l5.75-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.969 0-3.821-.524-5.427-1.439l-.39-.23-4.05 1.058 1.02-3.944-.254-.403A9.955 9.955 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
-        Send via WhatsApp
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#home" class="logo">THEMOLUMA<span>JOY</span> LUX</a>
-      <div class="footer-tagline">Shine Daily. Stay Elegant.</div>
-      <p>Premium, affordable luxury accessories for the modern Nigerian woman. Based in Ekpoma, Edo State. Serving Nigeria and the world with quality and elegance.</p>
-      <div class="footer-socials" style="margin-top:20px">
-        <a class="social-link" href="https://wa.me/2349157562801" target="_blank">💬</a>
-        <a class="social-link" href="https://instagram.com/Themolumajoy_Lux" target="_blank">📸</a>
-        <a class="social-link" href="https://tiktok.com/@Themolumajoy_Lux" target="_blank">🎵</a>
-      </div>
-    </div>
-    <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#shop">Shop</a></li><li><a href="#engrave">Engraving</a></li><li><a href="#about">About Us</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Collections</h4><ul><li><a href="#shop">Engraving Jewelry</a></li><li><a href="#shop">Dainty Necklaces</a></li><li><a href="#shop">Moissanite Jewelry</a></li><li><a href="#shop">Luxury Wristwatches</a></li><li><a href="#shop">Tote Bags</a></li></ul></div>
-    <div class="footer-col"><h4>Policies</h4><ul><li><a href="#faq">Shipping Info</a></li><li><a href="#faq">Engraving Policy</a></li><li><a href="#faq">Non-Tarnish Guarantee</a></li><li><a href="#contact">Returns & Exchanges</a></li><li><a href="#contact">Privacy Policy</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 <span>THEMOLUMAJOY LUX</span>. All rights reserved. Made with ❤️ in Ekpoma, Edo State, Nigeria.</p>
-    <p>09157562801 &nbsp;·&nbsp; Ekpoma, Edo State</p>
-  </div>
-</footer>
-
-<!-- WA FLOAT -->
-<div class="wa-float">
-  <div class="wa-bubble" id="waBubble"><strong>👋 Hi! Need help?</strong>Chat us to order anything!</div>
-  <a class="wa-btn-float" href="https://wa.me/2349157562801?text=Hi%20THEMOLUMAJOY%20LUX!%20I%27d%20like%20to%20place%20an%20order." target="_blank">
-    <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.526 5.847L.057 23.4c-.073.26.007.537.207.718.14.124.323.19.511.19.067 0 .135-.01.2-.029l5.75-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.969 0-3.821-.524-5.427-1.439l-.39-.23-4.05 1.058 1.02-3.944-.254-.403A9.955 9.955 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
-  </a>
-</div>
-
-<!-- CART -->
-<div class="cart-overlay" id="cartOverlay" onclick="handleCartClick(event)">
-  <div class="cart-panel">
-    <div class="cart-header"><h3>Your Wishlist</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
-    <div class="cart-items-wrap" id="cartItemsWrap">
-      <div class="cart-empty"><div class="empty-icon">🛍️</div><p>Your cart is empty</p></div>
-    </div>
-    <div class="cart-footer" id="cartFooter" style="display:none">
-      <div class="cart-total"><span>Total</span><strong id="cartTotal">₦0</strong></div>
-      <button class="checkout-btn">Proceed to Checkout</button>
-      <a href="https://wa.me/2349157562801" target="_blank" class="wa-checkout">
-        <svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.526 5.847L.057 23.4c-.073.26.007.537.207.718.14.124.323.19.511.19.067 0 .135-.01.2-.029l5.75-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.969 0-3.821-.524-5.427-1.439l-.39-.23-4.05 1.058 1.02-3.944-.254-.403A9.955 9.955 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
-        Complete on WhatsApp
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- ORDER MODAL -->
-<div class="modal-overlay" id="orderModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div><div class="modal-title">Order This Piece</div><div style="color:var(--muted);font-size:.72rem;margin-top:4px">Complete your order via WhatsApp</div></div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-product-info">
-        <div class="modal-product-emoji" id="modalEmoji">💍</div>
-        <div><div class="modal-product-name" id="modalProductName">Product</div><div class="modal-product-price" id="modalProductPrice">₦0</div></div>
-      </div>
-      <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" id="customerName" placeholder="Enter your full name"/></div>
-      <div id="engraveSection">
-        <div class="form-group">
-          <label class="form-label">Add Engraving?</label>
-          <div class="engrave-options">
-            <div class="engrave-opt active" id="noEngrave" onclick="selectEngrave('no')"><div class="engrave-opt-title">No Engraving</div><div class="engrave-opt-sub">Standard order</div></div>
-            <div class="engrave-opt" id="yesEngrave" onclick="selectEngrave('yes')"><div class="engrave-opt-title">✍️ Add Engraving</div><div class="engrave-opt-sub">24hrs · 20 chars max</div></div>
-          </div>
-        </div>
-        <div id="engraveFields" style="display:none">
-          <div class="form-group"><label class="form-label">Front Text – max 20 chars</label><input type="text" class="form-input" id="engraveText" placeholder="e.g. Forever Yours" maxlength="20" oninput="updateCharCount()"/><div class="char-count" id="charCount">0 / 20 characters</div></div>
-          <div class="form-group">
-            <label class="form-label">Back Engraving? (+₦3,000)</label>
-            <div class="engrave-options">
-              <div class="engrave-opt active" id="noBack" onclick="selectBack('no')"><div class="engrave-opt-title">Front Only</div><div class="engrave-opt-sub">Included</div></div>
-              <div class="engrave-opt" id="yesBack" onclick="selectBack('yes')"><div class="engrave-opt-title">Front + Back</div><div class="engrave-opt-sub">+₦3,000</div></div>
-            </div>
-          </div>
-          <div id="backTextField" style="display:none"><div class="form-group"><label class="form-label">Back Text – max 20 chars</label><input type="text" class="form-input" id="engraveBackText" placeholder="e.g. 14.02.2024" maxlength="20"/></div></div>
-          <div class="engrave-notice"><strong>✦ Engraving Info</strong>Front engraving: included · Back: +₦3,000 · Ready in 24 hours · Delivery: 3–5 days</div>
-        </div>
-      </div>
-      <a class="wa-order-btn" id="waOrderLink" href="#" target="_blank" onclick="buildWALink()">
-        <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.526 5.847L.057 23.4c-.073.26.007.537.207.718.14.124.323.19.511.19.067 0 .135-.01.2-.029l5.75-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.969 0-3.821-.524-5.427-1.439l-.39-.23-4.05 1.058 1.02-3.944-.254-.403A9.955 9.955 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
-        Complete Order on WhatsApp
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-// CURSOR
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'},50)});
-document.addEventListener('mousedown',()=>{cur.style.transform='translate(-50%,-50%) scale(1.8)';ring.style.transform='translate(-50%,-50%) scale(.8)'});
-document.addEventListener('mouseup',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)'});
-
-// MOBILE
-function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
-window.addEventListener('resize',()=>{const h=document.getElementById('hamBtn');if(h)h.style.display=window.innerWidth<=768?'flex':'none'});
-window.dispatchEvent(new Event('resize'));
-
-// REVEAL
-const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// FAQ
-function toggleFaq(btn){const item=btn.closest('.faq-item'),open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open')}
-
-// LIVE PREVIEW
-function updateLivePreview(input){document.getElementById('livePreview').textContent=input.value||'Your Name Here';document.getElementById('liveCounter').textContent=input.value.length+' / 20 characters'}
-
-// FILTER
-function filterProducts(btn,cat){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.product-card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none'})}
-
-// CART
-let cartArr=[];
-function toggleCart(){document.getElementById('cartOverlay').classList.toggle('open');document.body.style.overflow=document.getElementById('cartOverlay').classList.contains('open')?'hidden':''}
-function handleCartClick(e){if(e.target===document.getElementById('cartOverlay'))toggleCart()}
-function renderCart(){
-  const w=document.getElementById('cartItemsWrap'),f=document.getElementById('cartFooter');
-  document.getElementById('cartCount').textContent=cartArr.length;
-  if(!cartArr.length){w.innerHTML='<div class="cart-empty"><div class="empty-icon">🛍️</div><p>Your cart is empty</p></div>';f.style.display='none';return}
-  w.innerHTML=cartArr.map((item,i)=>`<div class="cart-item"><div class="cart-item-icon">${item.emoji}</div><div class="cart-item-details"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">${item.price}</div>${item.engrave?`<div class="cart-item-engrave">✍️ "${item.engrave}"</div>`:''}</div><button class="cart-item-remove" onclick="removeItem(${i})">✕</button></div>`).join('');
-  const total=cartArr.reduce((s,i)=>s+parseInt(i.price.replace(/[₦,]/g,'')),0);
-  document.getElementById('cartTotal').textContent='₦'+total.toLocaleString();f.style.display='block';
-}
-function removeItem(i){cartArr.splice(i,1);renderCart()}
-function addToCart(name,price,emoji,engrave=''){cartArr.push({name,price,emoji,engrave});renderCart()}
-
-// MODAL
-let cp={name:'',price:'',emoji:'',canEngrave:false,wantsEngrave:false,wantsBack:false};
-function openModal(name,price,emoji,canEngrave){
-  cp={name,price,emoji,canEngrave,wantsEngrave:false,wantsBack:false};
-  document.getElementById('modalProductName').textContent=name;
-  document.getElementById('modalProductPrice').textContent=price;
-  document.getElementById('modalEmoji').textContent=emoji;
-  document.getElementById('customerName').value='';
-  document.getElementById('engraveText').value='';
-  if(document.getElementById('engraveBackText'))document.getElementById('engraveBackText').value='';
-  document.getElementById('charCount').textContent='0 / 20 characters';
-  document.getElementById('engraveSection').style.display=canEngrave?'block':'none';
-  document.getElementById('engraveFields').style.display='none';
-  document.getElementById('backTextField').style.display='none';
-  selectEngrave('no');selectBack('no');
-  document.getElementById('orderModal').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){document.getElementById('orderModal').classList.remove('open');document.body.style.overflow=''}
-document.getElementById('orderModal').addEventListener('click',e=>{if(e.target===document.getElementById('orderModal'))closeModal()});
-function selectEngrave(val){cp.wantsEngrave=(val==='yes');document.getElementById('noEngrave').classList.toggle('active',val==='no');document.getElementById('yesEngrave').classList.toggle('active',val==='yes');document.getElementById('engraveFields').style.display=val==='yes'?'block':'none'}
-function selectBack(val){cp.wantsBack=(val==='yes');document.getElementById('noBack').classList.toggle('active',val==='no');document.getElementById('yesBack').classList.toggle('active',val==='yes');document.getElementById('backTextField').style.display=val==='yes'?'block':'none'}
-function updateCharCount(){const l=document.getElementById('engraveText').value.length;const el=document.getElementById('charCount');el.textContent=l+' / 20 characters';el.classList.toggle('warn',l>=18)}
-function buildWALink(){
-  const name=document.getElementById('customerName').value||'(Not provided)';
-  const front=document.getElementById('engraveText').value;
-  const back=document.getElementById('engraveBackText')?.value||'';
-  let msg=`Hello THEMOLUMAJOY LUX! 👋\n\nI'd like to order:\n*${cp.name}* — ${cp.price}\n\nMy name: ${name}`;
-  if(cp.wantsEngrave){msg+=`\n\n✍️ Engraving:\nFront: "${front}"`;if(cp.wantsBack)msg+=`\nBack: "${back}" (+₦3,000)`;}
-  else msg+=`\n\nNo engraving needed.`;
-  msg+=`\n\nKindly advise on payment and delivery. Thank you! 🙏`;
-  document.getElementById('waOrderLink').href=`https://wa.me/2349157562801?text=${encodeURIComponent(msg)}`;
-  addToCart(cp.name,cp.price,cp.emoji,cp.wantsEngrave?front:'');
+background: var(--black);
+color: var(--white);
+font-family: 'Montserrat', sans-serif;
+font-weight: 300;
+overflow-x: hidden;
+cursor: none;
 }
 
-// HIDE BUBBLE
-setTimeout(()=>{const b=document.getElementById('waBubble');if(b)b.style.display='none'},6000);
-</script>
-</body>
-</html>
+/* CUSTOM CURSOR */
+.cursor {
+position: fixed; width: 10px; height: 10px;
+background: var(--gold); border-radius: 50%;
+pointer-events: none; z-index: 9999;
+transform: translate(-50%,-50%);
+transition: transform 0.1s ease;
+}
+.cursor-ring {
+position: fixed; width: 36px; height: 36px;
+border: 1px solid var(--gold); border-radius: 50%;
+pointer-events: none; z-index: 9998;
+transform: translate(-50%,-50%);
+transition: all 0.18s ease; opacity: 0.6;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--royal-mid); }
+
+/* NAV */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+display: flex; align-items: center; justify-content: space-between;
+padding: 22px 60px;
+background: linear-gradient(to bottom, rgba(6,12,26,0.98) 0%, transparent 100%);
+backdrop-filter: blur(6px);
+border-bottom: 1px solid var(--border-blue);
+animation: fadeDown 1s ease forwards;
+}
+@keyframes fadeDown {
+from { opacity: 0; transform: translateY(-20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.logo {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.45rem; font-weight: 400;
+letter-spacing: 0.1em; color: var(--gold);
+text-decoration: none;
+}
+.logo span { font-style: italic; color: var(--white); }
+
+.nav-links { display: flex; gap: 38px; list-style: none; }
+.nav-links a {
+color: var(--white); text-decoration: none;
+font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+opacity: 0.8; transition: opacity 0.3s, color 0.3s;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold); }
+
+.nav-icons { display: flex; gap: 18px; align-items: center; }
+.nav-icons button, .nav-wa-btn {
+background: none; border: none; color: var(--white);
+font-size: 1rem; cursor: none; opacity: 0.8;
+transition: opacity 0.3s, color 0.3s; position: relative;
+font-family: 'Montserrat', sans-serif;
+}
+.nav-icons button:hover { opacity: 1; color: var(--gold); }
+
+.nav-wa-btn {
+display: flex; align-items: center; gap: 8px;
+background: var(--royal); border: 1px solid var(--royal-mid);
+padding: 9px 20px; border-radius: 2px;
+font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+color: var(--white); text-decoration: none; opacity: 1;
+transition: background 0.3s, border-color 0.3s;
+}
+.nav-wa-btn:hover { background: var(--royal-mid); border-color: var(--gold); }
+.nav-wa-btn svg { width: 14px; height: 14px; fill: #25D366; }
+
+.cart-count {
+position: absolute; top: -6px; right: -8px;
+background: var(--gold); color: var(--black);
+font-size: 0.55rem; font-weight: 600;
+width: 16px; height: 16px; border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-family: 'Montserrat', sans-serif;
+}
+
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: none; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 1px; background: var(--white); }
+
+/* MOBILE MENU */
+.mobile-menu {
+display: none; position: fixed; top: 70px; left: 0; right: 0;
+background: rgba(6,12,26,0.98); border-bottom: 1px solid var(--border);
+z-index: 99; padding: 24px 32px; backdrop-filter: blur(10px);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.mobile-menu a {
+text-decoration: none; color: var(--white); font-size: 0.85rem;
+letter-spacing: 0.15em; text-transform: uppercase;
+padding-bottom: 10px; border-bottom: 1px solid var(--border);
+display: block; transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+
+/* HERO */
+.hero {
+position: relative; height: 100vh;
+display: flex; align-items: center; justify-content: center;
+overflow: hidden;
+}
+.hero-bg {
+position: absolute; inset: 0;
+background:
+radial-gradient(ellipse at 65% 45%, rgba(26,61,143,0.35) 0%, transparent 55%),
+radial-gradient(ellipse at 20% 75%, rgba(201,168,76,0.08) 0%, transparent 45%),
+radial-gradient(ellipse at 85% 85%, rgba(42,82,184,0.15) 0%, transparent 40%),
+linear-gradient(160deg, #060c1a 0%, #0c1628 50%, #060c1a 100%);
+}
+.hero-grain {
+position: absolute; inset: 0; opacity: 0.035;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+.hero-line {
+position: absolute; top: 0; left: 50%;
+width: 1px; height: 100%;
+background: linear-gradient(to bottom, transparent, rgba(42,82,184,0.4), transparent);
+opacity: 0.4;
+}
+.hero-line-2 {
+position: absolute; top: 0; left: 30%;
+width: 1px; height: 100%;
+background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.15), transparent);
+opacity: 0.6;
+}
+
+.hero-content {
+position: relative; text-align: center;
+animation: heroReveal 1.4s ease 0.3s both;
+padding: 0 20px;
+}
+@keyframes heroReveal {
+from { opacity: 0; transform: translateY(40px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase;
+color: var(--gold); margin-bottom: 24px;
+display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+content: ''; width: 36px; height: 1px; background: var(--gold); opacity: 0.5;
+}
+
+.hero h1 {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(3.2rem, 8vw, 7rem);
+font-weight: 300; line-height: 1.05;
+letter-spacing: 0.02em; margin-bottom: 8px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); display: block; }
+
+.hero-sub {
+font-size: 0.68rem; letter-spacing: 0.3em;
+color: var(--muted); margin: 28px 0 16px;
+text-transform: uppercase;
+}
+.hero-location {
+font-size: 0.62rem; letter-spacing: 0.2em;
+color: rgba(201,168,76,0.6); margin-bottom: 44px;
+}
+
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+.btn-primary {
+display: inline-block; padding: 16px 48px;
+border: 1px solid var(--gold); color: var(--gold);
+text-decoration: none; font-size: 0.62rem;
+letter-spacing: 0.3em; text-transform: uppercase;
+transition: all 0.4s ease; position: relative; overflow: hidden; cursor: none;
+}
+.btn-primary::before {
+content: ''; position: absolute; inset: 0;
+background: var(--gold); transform: translateX(-101%);
+transition: transform 0.4s ease; z-index: -1;
+}
+.btn-primary:hover { color: var(--black); }
+.btn-primary:hover::before { transform: translateX(0); }
+
+.btn-royal {
+display: inline-flex; align-items: center; gap: 10px;
+padding: 16px 40px;
+background: var(--royal); border: 1px solid var(--royal-mid);
+color: var(--white); text-decoration: none;
+font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+transition: all 0.3s; cursor: none;
+}
+.btn-royal:hover { background: var(--royal-mid); border-color: var(--gold); }
+.btn-royal svg { width: 15px; height: 15px; fill: #25D366; }
+
+.hero-badges {
+display: flex; gap: 40px; justify-content: center;
+margin-top: 56px; flex-wrap: wrap;
+}
+.hero-badge {
+display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.hero-badge-num {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.6rem; color: var(--gold); font-weight: 400;
+}
+.hero-badge-label {
+font-size: 0.55rem; letter-spacing: 0.2em;
+color: var(--muted); text-transform: uppercase;
+}
+.badge-divider { width: 1px; height: 50px; background: var(--border); align-self: center; }
+
+.hero-scroll {
+position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+display: flex; flex-direction: column; align-items: center; gap: 8px;
+animation: bounce 2.2s ease infinite;
+}
+.hero-scroll span { font-size: 0.52rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
+.hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--royal-mid), transparent); }
+@keyframes bounce {
+0%, 100% { transform: translateX(-50%) translateY(0); }
+50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* MARQUEE */
+.marquee-wrap {
+border-top: 1px solid var(--border);
+border-bottom: 1px solid var(--border);
+padding: 15px 0; overflow: hidden;
+background: rgba(26,61,143,0.08);
+}
+.marquee-track {
+display: flex; gap: 60px; width: max-content;
+animation: marquee 22s linear infinite;
+}
+.marquee-item {
+font-family: 'Cormorant Garamond', serif;
+font-size: 0.95rem; font-style: italic;
+color: var(--gold); opacity: 0.65;
+white-space: nowrap; letter-spacing: 0.06em;
+}
+.marquee-dot { color: var(--royal-mid); opacity: 0.5; }
+@keyframes marquee {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+
+/* SECTION BASE */
+section { padding: 100px 60px; }
+.section-label {
+font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase;
+color: var(--gold); margin-bottom: 14px;
+display: flex; align-items: center; gap: 14px;
+}
+.section-label::after { content: ''; flex: 1; max-width: 55px; height: 1px; background: var(--gold); opacity: 0.4; }
+.section-title {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(2rem, 4vw, 3.2rem);
+font-weight: 300; line-height: 1.2; margin-bottom: 44px;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+/* TRUST STRIP */
+.trust-strip {
+background: var(--royal-deep);
+border-top: 1px solid var(--border-blue);
+border-bottom: 1px solid var(--border-blue);
+padding: 20px 60px;
+display: flex; align-items: center; justify-content: center;
+gap: 0; flex-wrap: wrap;
+}
+.trust-item {
+display: flex; align-items: center; gap: 10px;
+padding: 6px 32px;
+border-right: 1px solid rgba(255,255,255,0.1);
+font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+color: var(--gold-light);
+}
+.trust-item:last-child { border-right: none; }
+.trust-item svg { width: 16px; height: 16px; opacity: 0.8; }
+
+/* CATEGORIES */
+.categories {
+background: var(--charcoal);
+border-top: 1px solid var(--border);
+border-bottom: 1px solid var(--border);
+padding-top: 80px; padding-bottom: 80px;
+}
+.category-grid {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 2px;
+}
+.category-card {
+position: relative; overflow: hidden;
+aspect-ratio: 3/4; cursor: none;
+background: var(--dark);
+}
+.category-bg {
+position: absolute; inset: 0;
+transition: transform 0.6s ease;
+}
+.category-card:hover .category-bg { transform: scale(1.08); }
+.cat-1 .category-bg { background: radial-gradient(ellipse at center, #0e2560 0%, #060c1a 100%); }
+.cat-2 .category-bg { background: radial-gradient(ellipse at center, #1a3d8f 0%, #060c1a 100%); }
+.cat-3 .category-bg { background: radial-gradient(ellipse at center, #2a1f0a 0%, #060c1a 100%); }
+.cat-4 .category-bg { background: radial-gradient(ellipse at center, #112670 0%, #060c1a 100%); }
+.cat-5 .category-bg { background: radial-gradient(ellipse at center, #0e2040 0%, #060c1a 100%); }
+.category-icon {
+position: absolute; top: 50%; left: 50%;
+transform: translate(-50%, -60%);
+font-size: 3.5rem; opacity: 0.22;
+transition: opacity 0.4s, transform 0.4s;
+}
+.category-card:hover .category-icon { opacity: 0.38; transform: translate(-50%, -65%); }
+.category-overlay {
+position: absolute; inset: 0;
+background: linear-gradient(to top, rgba(6,12,26,0.92) 0%, transparent 60%);
+display: flex; flex-direction: column;
+justify-content: flex-end; padding: 28px 22px;
+}
+.category-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.15rem; font-weight: 300;
+color: var(--white); margin-bottom: 6px;
+transition: color 0.3s;
+}
+.category-card:hover .category-name { color: var(--gold); }
+.category-tag {
+font-size: 0.52rem; letter-spacing: 0.2em;
+color: var(--gold); text-transform: uppercase; opacity: 0.7;
+}
+.category-btn {
+display: inline-block; margin-top: 14px;
+font-size: 0.52rem; letter-spacing: 0.2em;
+color: var(--white); text-transform: uppercase;
+padding: 8px 0; border-bottom: 1px solid var(--gold);
+opacity: 0; transform: translateY(8px);
+transition: opacity 0.3s, transform 0.3s;
+cursor: none; text-decoration: none;
+}
+.category-card:hover .category-btn { opacity: 1; transform: translateY(0); }
+
+/* PRODUCTS */
+.products { background: var(--black); }
+.products-header {
+display: flex; align-items: flex-end;
+justify-content: space-between; margin-bottom: 44px; flex-wrap: wrap; gap: 20px;
+}
+.products-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+padding: 8px 22px; background: none;
+border: 1px solid var(--border-blue);
+color: var(--muted);
+font-family: 'Montserrat', sans-serif;
+font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+cursor: none; transition: all 0.3s;
+}
+.filter-btn.active, .filter-btn:hover {
+border-color: var(--gold); color: var(--gold);
+background: rgba(201,168,76,0.05);
+}
+.products-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 2px;
+}
+.product-card {
+background: var(--charcoal); cursor: none;
+position: relative; overflow: hidden;
+transition: transform 0.4s ease;
+}
+.product-image {
+position: relative; aspect-ratio: 1/1.15; overflow: hidden;
+background: var(--dark);
+display: flex; align-items: center; justify-content: center;
+}
+.product-emoji {
+font-size: 5rem; opacity: 0.28;
+transition: transform 0.6s ease, opacity 0.4s;
+}
+.product-card:hover .product-emoji { transform: scale(1.15); opacity: 0.42; }
+.product-glow {
+position: absolute; inset: 0;
+opacity: 0; transition: opacity 0.4s;
+}
+.product-card:hover .product-glow { opacity: 1; }
+.glow-blue { background: radial-gradient(ellipse at center, rgba(26,61,143,0.2) 0%, transparent 70%); }
+.glow-gold { background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%); }
+.glow-royal { background: radial-gradient(ellipse at center, rgba(42,82,184,0.18) 0%, transparent 70%); }
+
+.product-badge {
+position: absolute; top: 16px; left: 16px;
+background: var(--gold); color: var(--black);
+font-size: 0.52rem; font-weight: 600;
+letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px;
+}
+.product-badge.blue {
+background: var(--royal); color: var(--white);
+}
+.product-actions {
+position: absolute; top: 16px; right: 16px;
+display: flex; flex-direction: column; gap: 8px;
+opacity: 0; transform: translateX(12px);
+transition: all 0.3s ease;
+}
+.product-card:hover .product-actions { opacity: 1; transform: translateX(0); }
+.action-btn {
+width: 36px; height: 36px;
+background: rgba(6,12,26,0.9); border: 1px solid var(--border);
+color: var(--white); cursor: none;
+display: flex; align-items: center; justify-content: center;
+font-size: 0.9rem; transition: all 0.3s;
+}
+.action-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+.product-info {
+padding: 20px 20px 24px;
+border-top: 1px solid var(--border);
+}
+.product-category {
+font-size: 0.52rem; letter-spacing: 0.2em;
+color: var(--gold); text-transform: uppercase; margin-bottom: 8px;
+}
+.product-name {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.1rem; font-weight: 300;
+color: var(--white); margin-bottom: 8px; line-height: 1.3;
+}
+.engrave-tag {
+display: inline-flex; align-items: center; gap: 5px;
+font-size: 0.52rem; letter-spacing: 0.1em;
+color: var(--gold-light); opacity: 0.8; margin-bottom: 12px;
+}
+.product-footer {
+display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.product-price {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.3rem; color: var(--gold); font-weight: 400;
+}
+.add-to-cart {
+padding: 10px 18px; background: none;
+border: 1px solid var(--royal-mid);
+color: var(--white);
+font-family: 'Montserrat', sans-serif;
+font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+cursor: none; transition: all 0.3s;
+}
+.add-to-cart:hover { background: var(--royal); border-color: var(--gold); color: var(--gold); }
+
+/* ENGRAVE CTA */
+.engrave-cta {
+background: linear-gradient(135deg, #060c1a 0%, #0e2560 50%, #060c1a 100%);
+border-top: 1px solid var(--border);
+border-bottom: 1px solid var(--border);
+text-align: center; position: relative; overflow: hidden;
+}
+.engrave-cta::before {
+content: ''; position: absolute; inset: 0;
+background: radial-gradient(ellipse at center, rgba(201,168,76,0.07) 0%, transparent 70%);
+}
+.engrave-cta::after {
+content: ''; position: absolute; inset: 0;
+background: radial-gradient(ellipse at 70% 30%, rgba(42,82,184,0.2) 0%, transparent 55%);
+}
+.engrave-cta .cta-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+.engrave-cta .big-number {
+font-family: 'Cormorant Garamond', serif;
+font-size: clamp(5rem, 12vw, 10rem);
+color: var(--royal-mid); opacity: 0.07;
+position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+pointer-events: none; white-space: nowrap;
+}
+.engrave-cta p {
+color: var(--muted); font-size: 0.8rem;
+line-height: 1.85; margin-bottom: 28px; max-width: 520px;
+margin-left: auto; margin-right: auto;
+}
+.engrave-steps-row {
+display: flex; gap: 0; margin-bottom: 40px;
+border: 1px solid var(--border);
+}
+.engrave-step {
+flex: 1; padding: 28px 20px;
+border-right: 1px solid var(--border);
+text-align: center;
+}
+.engrave-step:last-child { border-right: none; }
+.step-num-circle {
+width: 40px; height: 40px; border-radius: 50%;
+background: var(--royal); border: 1px solid var(--gold);
+display: flex; align-items: center; justify-content: center;
+margin: 0 auto 14px;
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.1rem; color: var(--gold);
+}
+.engrave-step-title {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1rem; color: var(--white); margin-bottom: 6px;
+}
+.engrave-step-sub {
+font-size: 0.6r
+
+How do I make the website live
